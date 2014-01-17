@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>社团宝--社团管理页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php include 'headerCSS.html';?>
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    </style>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/public/uploadify/uploadify.css">
+  </head>
+
+  <body>
+    <?php include 'adminSocietyHeader.html';?>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <?php include 'adminSocietyLeft.html';?>
+        <div class="span9">
+          <div class="hero-unit">
+            <form class="form-horizontal" action="<?php echo spUrl('admin','societyInfoSave');?>" method="post">
+              <?php if($societyInfo['desp']){?>
+              <div class="control-group">
+                <label class="control-label" for="society_name">社团二维码</label>
+                <div class="controls">
+                  <img src="<?php echo spUrl('admin','societyInfoQrCode',array('id'=>$societyInfo['id'],'pix'=>5));?>" class="img-polaroid">
+                  <br />
+                  <a href="<?php echo spUrl('admin','societyInfoQrCode',array('id'=>$societyInfo['id'],'pix'=>50));?>" target="_blank">点击查看大尺寸二维码</a>
+                </div>
+              </div>
+              <?php }?>
+              <div class="control-group">
+                <label class="control-label" for="society_name">社团名称</label>
+                <div class="controls">
+                  <input type="text" name="society_name" id="society_name" placeholder="社团名称" value="<?php echo ($societyInfo['society_name'])?$societyInfo['society_name']:'';?>">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="logo">社团LOGO</label>
+                <div class="controls">
+                  <img id="logo_view" src="<?php echo ($societyInfo['logo'])?$societyInfo['logo']:'/public/img/no_logo.jpg';?>" class="img-polaroid">
+                  <span class="help-block">请选择一个180×180的图片作为社团Logo</span>
+                  <input id="logo" type="file" />
+                  <input name="logo" type="hidden" value="<?php echo ($societyInfo['logo'])?$societyInfo['logo']:'';?>" />
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="desp">社团简介</label>
+                <div class="controls">
+                  <textarea id="desp" name="desp" rows="6"><?php echo ($societyInfo['desp'])?htmlspecialchars($societyInfo['desp']):'';?></textarea>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <button type="submit" class="btn">保存</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <?php include 'footer.html';?>
+
+    </div>
+    <script src="/public/uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/public/kindeditor/kindeditor-min.js"></script>
+    <script type="text/javascript" src="/public/kindeditor/lang/zh_CN.js"></script>
+    <script>
+      var editor;
+      KindEditor.ready(function(K){
+        editor = K.create('#desp',{
+          width : '640px',
+          minWidth : '200px',
+          height : '400px',
+          cssPath : '/public/kindeditor/plugins/code/prettify.css',
+          uploadJson : '<?php echo spUrl('admin','societyInfoKindEditor');?>',
+          allowFileManager : false,
+          items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat','|','insertorderedlist', 'insertunorderedlist', 
+         'forecolor', 'hilitecolor', 'fontname', 'fontsize',  '|', 'link', 'unlink', 'emoticons', 
+         'shcode', 'image', 'flash', 'quote', '|', 'source','about'],
+         htmlTags : {
+            font : ['color', 'size', 'face', '.background-color'],
+            span : [
+                '.color', '.background-color', '.font-size', '.font-family', '.background',
+                '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.line-height'
+            ],
+            div : [
+                'align', '.border', '.margin', '.padding', '.text-align', '.color',
+                '.background-color', '.font-size', '.font-family', '.font-weight', '.background',
+                '.font-style', '.text-decoration', '.vertical-align', '.margin-left'
+            ],
+            table: [
+                'border', 'cellspacing', 'cellpadding', 'width', 'height', 'align', 'bordercolor',
+                '.padding', '.margin', '.border', 'bgcolor', '.text-align', '.color', '.background-color',
+                '.font-size', '.font-family', '.font-weight', '.font-style', '.text-decoration', '.background',
+                '.width', '.height', '.border-collapse'
+            ],
+            'td,th': [
+                'align', 'valign', 'width', 'height', 'colspan', 'rowspan', 'bgcolor',
+                '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.font-weight',
+                '.font-style', '.text-decoration', '.vertical-align', '.background', '.border'
+            ],
+            a : ['href', 'target', 'name'],
+            embed : ['src', 'width', 'height', 'type', 'loop', 'autostart', 'quality', '.width', '.height', 'align', 'allowscriptaccess'],
+            img : ['src', 'width', 'height', 'border', 'alt', 'title', 'align', '.width', '.height', '.border'],
+            'p,ol,ul,li,blockquote,h1,h2,h3,h4,h5,h6' : [
+                'align', '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.background',
+                '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.text-indent', '.margin-left'
+            ],
+            pre : ['class'],
+            hr : ['class', '.page-break-after'],
+            'br,tbody,tr,strong,b,sub,sup,em,i,u,strike,s,del' : []
+            }
+        });
+      });
+      <?php $timestamp = time();?>
+      $(function() {
+        $('#logo').uploadify({
+          'formData'     : {
+            'timestamp' : '<?php echo $timestamp;?>',
+            'token'     : '<?php echo md5('society_unique_salt_' . $timestamp);?>'
+          },
+          'buttonText' : '请选择图片',
+          'swf'      : '/public/uploadify/uploadify.swf',
+          'uploader' : '<?php echo spUrl('admin','societyInfoUploadify');?>',
+          'onUploadComplete' : function(fileObj) {
+            var filePath = '/uploads/logo/<?php echo md5($_SESSION['societyInfo']['society_login_name'].$timestamp);?>' + fileObj.type;
+            $('#logo_view').attr('src',filePath);
+            $('input[name=logo]').val(filePath);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

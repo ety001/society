@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>社团宝</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <?php include 'header.html';?>
+  </head>
+  <body>
+  <?php include 'nav.html';?>
+    <div role="main" class="main">
+      <a href="#nav" id="toggle">Menu</a>
+      <?php if(!$isLogin){?>
+      <div class="clearfix">
+        请先<a href="<?php echo spUrl('reg','memberReg');?>">注册</a>，如果已经注册，请<a href="<?php echo spUrl('login','memberLogin');?>">登录</a>
+      </div>
+      <?php } else {?>
+      <div class="clearfix">
+        <h3>我的报名表</h3>
+        <div>
+          <?php if($allResumes){?>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>报名表</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($allResumes as $k => $v) {?>
+              <tr>
+                <td><a href="<?php echo spUrl('main','myResumes',array('id'=>$v['id'],'sid'=>$sid,'tid'=>$tid));?>"><?php echo str_pad($v['id'],10,'0',STR_PAD_LEFT);?></a></td>
+                <td>
+                  <?php if($sid && $tid){?>
+                  <a class="btn btn-success" href="<?php echo spUrl('main','sentResumes',array('id'=>$v['id'],'sid'=>$sid,'tid'=>$tid));?>">直接使用</a> <a class="btn btn-warning" href="<?php echo spUrl('main','myResumes',array('id'=>$v['id'],'sid'=>$sid,'tid'=>$tid));?>">编辑后使用</a>
+                  <?php } else {?>
+                  <a class="btn btn-warning" href="<?php echo spUrl('main','myResumes',array('id'=>$v['id']));?>">编辑</a>
+                  <a class="btn btn-danger" href="<?php echo spUrl('main','rmMyResumes',array('id'=>$v['id']));?>">删除</a>
+                  <?php }?>
+                </td>
+              </tr>
+              <?php }?>
+            </tbody>
+          </table>
+          <?php } else {?>
+          <span class="label label-important">暂无报名表</span>&nbsp;&nbsp;
+          <?php }?>
+          <a class="btn btn-success" href="<?php echo spUrl('main','myResumes',array('sid'=>$sid,'tid'=>$tid));?>" >添加新报名表</a>
+        </div>
+      </div>
+      <?php }?>
+    </div>
+  <?php include 'footer.html';?>
+  </body>
+</html>

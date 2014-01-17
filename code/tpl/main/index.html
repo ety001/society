@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>社团宝</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <?php include 'header.html';?>
+  </head>
+  <body>
+  <?php include 'nav.html';?>
+    <div role="main" class="main">
+      <a href="#nav" id="toggle">Menu</a>
+      <div style="clear:both;">
+        <h2>社团列表</h2>
+        <div style="margin-bottom:14px;"><b>注意：社团宝已经关闭了用户系统，现在可以不用注册即可进行报名。之前已经报名的同学的信息已经在系统中，不用再重新提交。</b></div>
+        <ul class="thumbnails">
+        <?php foreach ($allSocieties as $key => $val) {
+            if($val['enable']){?>
+          <li class="span3 alert alert-info text-center"><a href="<?php echo spUrl('main','s',array('id'=>$val['id']));?>"><img style="width:100px;height:100px;" src="<?php echo $val['logo'];?>" alt=""><br /><?php echo $val['society_name'];?></a></li>
+        <?php
+          }
+        } ?>
+        </ul>
+      </div>
+    </div>
+  <?php include 'footer.html';?>
+  </body>
+</html>

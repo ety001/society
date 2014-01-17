@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><?php echo $societyInfo['society_name'];?>--社团宝</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <?php include 'header.html';?>
+  </head>
+  <body>
+  <?php include 'nav.html';?>
+    <div role="main" class="main">
+      <a href="#nav" id="toggle">Menu</a>
+      <div style="clear:both;">
+        <div class="controls">
+          <h2><?php echo $societyInfo['society_name'];?></h2>
+        </div>
+        <div class="controls">
+          <?php if(0){?>
+          <?php if($isFav){?>
+          <a href="#" class="btn btn-primary btn-mini disabled">已关注</a>
+          <?php } else {?>
+          <a href="<?php echo spUrl('main','addFav',array('sid'=>$societyInfo['id']));?>" class="btn btn-primary btn-mini">关注该社团</a>
+          <?php }?>
+          <?php }?>
+        </div>
+        <div class="controls">&nbsp;</div>
+        <div class="controls">
+          <?php echo $societyInfo['desp'];?>
+        </div>
+        <div class="controls">
+          <?php if($hasResume){?>
+            <span class="label label-success">你已经报名该社团了</span>&nbsp;&nbsp;<a href="<?php echo spUrl('main','myResumedSocieties');?>">点击这里查看详情</a>
+          <?php } else {?>
+            <?php if($teams){?>
+          <table class="table table-hover">
+            <caption>当前社团有以下分组可以报名</caption>
+            <thead>
+              <tr>
+                <th>组名(部门名)</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($teams as $k => $v) {?>
+              <tr>
+                <td><?php echo $v['team_name'];?></td>
+                <td><a href="<?php echo spUrl('main','myResumes',array('sid'=>$societyInfo['id'],'tid'=>$v['id']));?>" class="btn btn-warning btn-mini">报名加入</a></td>
+              </tr>
+              <?php }?>
+            </tbody>
+          </table>
+            <?php } else {
+              echo '<br /><span class="label label-important">该社团暂未开放报名</span>';
+            }?>
+          <?php }?>
+        </div>
+      </div>
+    </div>
+  <?php include 'footer.html';?>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>社团宝--社团管理页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php include 'headerCSS.html';?>
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    </style>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/public/uploadify/uploadify.css">
+  </head>
+
+  <body>
+    <?php include 'adminSocietyHeader.html';?>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <?php include 'adminSocietyLeft.html';?>
+        <div class="span9">
+          <div class="hero-unit">
+            <h3>报名该社团的同学名单</h3>
+            <!--<a href="<?php echo spUrl('admin','appRecruitExport');?>" class="btn btn-small btn-success">导出为Excel</a><br>-->
+            <?php if($recruitInfo){?>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>姓名</th>
+                  <th>学院</th>
+                  <th>专业</th>
+                  <th>报名组别</th>
+                  <th>手机号</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+              <?php 
+                foreach ($recruitInfo as $k => $v) {?>
+                <tr>
+                  <td><?php echo $v['resume']['realname'];?></td>
+                  <td><?php echo $v['resume']['college'];?></td>
+                  <td><?php echo $v['resume']['major'];?></td>
+                  <td><?php echo $v['teamInfo']['team_name'];?></td>
+                  <td><?php echo $v['resume']['mobile_num'];?></td>
+                  <td>
+                    <?php 
+                    switch ($v['status']) {
+                      case 0:?>
+                        <span class="label">未处理</span>
+                    <?php
+                      break;
+                      case 1:?>
+                        <span class="label label-success">通过</span>
+                    <?php
+                      break;
+                      case 2:?>
+                        <span class="label label-warning">未通过</span>
+                    <?php
+                      break;
+                    }?>
+                  </td>
+                  <td>
+                    <a href="<?php echo spUrl('admin','appRecruitDetail',array('id'=>$v['id']));?>" class="btn btn-info btn-small">详细</a>
+                    <?php if($v['status']==2 || $v['status']==0){?>
+                    <a href="<?php echo spUrl('admin','changeRecruitStatus',array('id'=>$v['id'],'status'=>1));?>" class="btn btn-success btn-small">通过</a>
+                    <?php }
+                    if($v['status']==1 || $v['status']==0) {?>
+                    <a href="<?php echo spUrl('admin','changeRecruitStatus',array('id'=>$v['id'],'status'=>2));?>" class="btn btn-warning btn-small">驳回</a>
+                    <?php }?>
+                    <a href="#" class="btn btn-danger btn-small" onclick="if( confirm('是否要删除') )del('<?php echo $v['id'];?>');">删除</a>
+                  </td>
+                </tr>
+                <?php 
+                }
+                ?>
+              </tbody>
+            </table>
+            <?php } else {
+              echo '暂无报名信息';
+            }
+            ?>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <?php include 'footer.html';?>
+      <script type="text/javascript">
+        function del(id){
+          location.href="<?php echo spUrl('admin','appRecruitRm');?>?id="+id;
+        }
+      </script>
+    </div>
+  </body>
+</html>

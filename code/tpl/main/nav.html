@@ -1,0 +1,16 @@
+    <?php global $__action;?>
+    <div role="navigation" id="nav">
+      <ul>
+        <li <?php echo ($__action =='index')?'class="active"':'';?> ><a href="<?php echo spUrl('main','index');?>"><?php echo ($__action=='index')?'':'返回';?>首页</a></li>
+        <?php if($isLogin==''){/* ?>
+        <li><a href="<?php echo spUrl('login','memberLogin');?>">登陆</a></li>
+        <li><a href="<?php echo spUrl('reg','memberReg');?>">注册</a></li>
+        <?php */} else {?>
+        <li <?php echo ($__action =='listFav')?' class="active" ':' ';?> ><a href="<?php echo spUrl('main','listFav');?>">关注的社团</a></li>
+        <li <?php echo ($__action =='myResumedSocieties')?' class="active" ':' ';?>><a href="<?php echo spUrl('main','myResumedSocieties');?>">我的报名</a></li>
+        <li <?php echo ($__action =='listMyResumes')?' class="active" ':' ';?> ><a href="<?php echo spUrl('main','listMyResumes');?>">我的报名表</a></li>
+        <li><a href="<?php echo spUrl('login','memberLogout');?>">退出</a></li>
+        <?php }?>
+        <li><a href="http://ohshit.cc" target="_blank">花擦网</a></li>
+      </ul>
+    </div>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>社团宝</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <?php include 'header.html';?>
+  </head>
+  <body>
+  <?php include 'nav.html';?>
+    <div role="main" class="main">
+      <a href="#nav" id="toggle">Menu</a>
+      <div style="clear:both;">
+        <h3>我已报名的社团</h3>
+        <div>
+          <?php if($allInfo){?>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>社团</th>
+                <th>参报组别</th>
+                <th>通过情况</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($allInfo as $k => $v) {?>
+              <tr>
+                <td><a href="<?php echo spUrl('main','s',array('id'=>$v['sa_id']));?>"><?php echo $v['societyInfo']['society_name'];?></a></td>
+                <td><?php echo $v['teamInfo']['team_name'];?></td>
+                <td>
+                  <?php
+                    if($v['status']==0){
+                      echo '<span class="label">未处理</span>';
+                    }
+                    if($v['status']==1){
+                      echo '<span class="label label-success">通过</span>';
+                    }
+                    if($v['status']==2){
+                      echo '<span class="label label-warning">未通过</span>';
+                    }
+                  ?>
+                </td>
+              </tr>
+              <?php }?>
+            </tbody>
+          </table>
+          <?php } else {?>
+          <span class="label label-important">暂无报名信息，赶紧到首页去看看吧</span>&nbsp;&nbsp;<a href="<?php echo spUrl('main','index');?>">点击这里去首页</a>
+          <?php }?>
+        </div>
+      </div>
+    </div>
+  <?php include 'footer.html';?>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>社团宝</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <?php include 'header.html';?>
+  </head>
+  <body>
+  <?php include 'nav.html';?>
+    <div role="main" class="main">
+      <a href="#nav" id="toggle">Menu</a>
+      <div style="clear:both;">
+        <form class="form-horizontal" action="<?php echo spUrl('main','saveMyResumes');?>" method="post">
+          <fieldset>
+            <input type="hidden" name="sid" value="<?php echo $sid;?>">
+            <input type="hidden" name="tid" value="<?php echo $tid;?>">
+            <div>
+              <legend class="">我的报名信息</legend>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="realname">姓名</label>
+              <div class="controls">
+                <input id="realname" name="realname" type="text" placeholder="请输入你的大名，亲" class="input-medium" value="<?php echo $resume['realname']?$resume['realname']:'';?>">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">性别</label>
+              <div class="controls">
+                <select name="sex" class="input-medium">
+                  <option></option>
+                  <option value="1" <?php echo (1==$resume['sex'])?' selected ':'';?>>帅哥</option>
+                  <option value="2" <?php echo (2==$resume['sex'])?' selected ':'';?>>美女</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="mobile_num">手机号</label>
+              <div class="controls">
+                <input id="mobile_num" name="mobile_num" type="text" placeholder="请输入你的手机号" class="input-medium" value="<?php echo $resume['mobile_num']?$resume['mobile_num']:'';?>">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">出生年月</label>
+              <div class="controls">
+                <select name="year" class="input-small">
+                  <option>年</option>
+                  <?php for($i=1980;$i<=2013;$i++){?>
+                  <option value="<?php echo $i;?>" <?php echo ($i==$resume['year'])?' selected ':'';?>><?php echo $i;?></option>
+                  <?php }?>
+                </select>
+                <select name="month" class="input-mini">
+                  <option>月</option>
+                  <?php for($i=1;$i<=12;$i++){?>
+                  <option value="<?php echo $i;?>" <?php echo ($i==$resume['month'])?' selected ':'';?>><?php echo $i;?></option>
+                  <?php }?>
+                </select>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="college">学院名</label>
+              <div class="controls">
+                <input id="college" name="college" type="text" placeholder="学院名" class="input-medium" value="<?php echo $resume['college']?$resume['college']:'';?>">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="major">专业名</label>
+              <div class="controls">
+                <input id="major" name="major" type="text" placeholder="专业名" class="input-medium" value="<?php echo $resume['major']?$resume['major']:'';?>">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="hobby">爱好、特长</label>
+              <div class="controls">
+                <input id="hobby" name="hobby" type="text" placeholder="请填写你的爱好、特长" class="input-medium" value="<?php echo $resume['hobby']?$resume['hobby']:'';?>">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="hobby">个人简历</label>
+              <div class="controls">
+                <textarea id="desp" name="desp" rows="6" class="input-medium"><?php echo ($resume['desp'])?htmlspecialchars($resume['desp']):'';?></textarea>
+                <span class="help-block span5">小提示：个人简介是你的报名表的重头，想想你有什么优势来加入到我们，那就写出来吧，字数不够多，内容不够丰富可是不会引起我们的兴趣的哦~</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
+                <button type="submit" class="btn btn-success">保存</button>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  <?php include 'footer.html';?>
+  <?php if(get_device_type()){?>
+  <script type="text/javascript" src="/public/kindeditor/kindeditor-min.js"></script>
+  <script type="text/javascript" src="/public/kindeditor/lang/zh_CN.js"></script>
+  <script>
+    var editor;
+    KindEditor.ready(function(K) {
+      editor = K.create('#desp', {
+        height: '350px',
+        resizeType : 1,
+        allowPreviewEmoticons : false,
+        allowImageUpload : false,
+        items : [
+          'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+          'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+          'insertunorderedlist', '|', 'emoticons', 'link']
+      });
+    });
+  </script>
+  <?php }?>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>社团宝</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <?php include 'header.html';?>
+  </head>
+  <body>
+  <?php include 'nav.html';?>
+    <div role="main" class="main">
+      <a href="#nav" id="toggle">Menu</a>
+      <div style="clear:both;">
+        <h2>我关注的社团</h2>
+        <?php if($favList){?>
+        <ul class="thumbnails">
+        <?php foreach ($favList as $key => $val) {?>
+          <li class="span3 alert alert-info text-center"><a href="<?php echo spUrl('main','s',array('id'=>$val['societyDetail']['id']));?>"><img style="width:100px;height:100px;" src="<?php echo $val['societyDetail']['logo'];?>" alt=""><br /><?php echo $val['societyDetail']['society_name'];?></a></li>
+        <?php } ?>
+        </ul>
+        <?php } else {?>
+        <span class="label label-important">暂无关注的社团</span>
+        <?php }?>
+      </div>
+    </div>
+  <?php include 'footer.html';?>
+  </body>
+</html>
